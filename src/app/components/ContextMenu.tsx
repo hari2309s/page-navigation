@@ -22,14 +22,14 @@ const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
         onMouseLeave={onMouseLeave}
         onFocus={onFocus}
       >
-        <div className="flex items-center justify-between h-10 bg-[#FAFBFC] text-[#1A1A1A] text-[14px] px-3 py-2 border-[1px] border-[#E1E1E1] rounded-tl-lg rounded-tr-lg font-medium">
+        <div className="flex items-center justify-between h-10 bg-[var(--color-contextmenu-header-bg)] text-[var(--color-active-text)] text-[14px] px-3 py-2 border-[1px] border-[var(--color-border)] rounded-tl-lg rounded-tr-lg font-medium">
           {pageTitle}
         </div>
         <div className="flex flex-col bg-white rounded-br-lg rounded-bl-lg">
           {options.slice(0, options.length - 1).map((option, index) => (
             <div
-              className={`flex items-center gap-x-1.5 px-3 pt-2 hover:bg-[#9da4b226] text-sm
-                ${option.label === "Delete" ? "text-[#EF494F]" : "text-[#1A1A1A]"} cursor-pointer
+              className={`flex items-center gap-x-1.5 px-3 pt-2 hover:bg-[var(--color-hover-bg)] text-sm
+                ${option.label === "Delete" ? "text-[var(--color-contextmenu-delete)]" : "text-[var(--color-active-text)]"} cursor-pointer
                 ${index === options.length - 1 ? "pb-0" : "pb-2"}`}
               key={index}
             >
@@ -37,10 +37,10 @@ const ContextMenu = forwardRef<HTMLDivElement, ContextMenuProps>(
               <span>{option.label}</span>
             </div>
           ))}
-          <div className="h-[1px] w-[90%] bg-[#E1E1E1] mx-3"></div>
+          <div className="h-[1px] w-[90%] bg-[var(--color-contextmenu-divider)] mx-3"></div>
           <div
-            className="flex items-center gap-x-1.5 px-3 pt-2 pb-2 hover:bg-[#9da4b226] 
-             text-[#EF494F] cursor-pointer rounded-br-lg rounded-bl-lg bg-white"
+            className="flex items-center gap-x-1.5 px-3 pt-2 pb-2 hover:bg-[var(--color-hover-bg)] 
+             text-[var(--color-contextmenu-delete)] cursor-pointer rounded-br-lg rounded-bl-lg bg-white"
           >
             {options[options.length - 1].icon}
             <span>{options[options.length - 1].label}</span>
