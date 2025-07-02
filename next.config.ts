@@ -17,6 +17,12 @@ const nextConfig: NextConfig = {
     return config;
   },
   reactStrictMode: true,
+  output: "export",
+  basePath: "/page-navigation",
+  assetPrefix: "/page-navigation/",
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
