@@ -8,7 +8,6 @@ A modern, interactive page navigation UI built with Next.js, React, Tailwind CSS
 - **Context menu** for each navigation step (right-click or menu button)
 - **Keyboard accessibility** and focus styles
 - **Responsive** and modern UI
-- **Static export** and deployable to GitHub Pages
 
 ## Getting Started
 
@@ -41,20 +40,10 @@ Visit [http://localhost:3000](http://localhost:3000) to view the app.
 npm run build && npx next export
 ```
 
-The static site will be output to the `out/` directory.
-
-## Deployment (GitHub Pages)
-
-This project is set up to deploy to GitHub Pages using GitHub Actions:
-
-- On every push to `main`, the app is built and statically exported to the `gh-pages` branch.
-- To enable Pages, go to your repository settings and set Pages to deploy from the `gh-pages` branch, root directory.
-
 ## Scripts
 
 - `dev` – Start development server
 - `build` – Build for production
-- `deploy` – Deploy to GitHub Pages
 - `start` – Start production server
 - `lint` – Run ESLint
 - `format` – Format code with Prettier
