@@ -104,12 +104,22 @@ export const useContextMenu = (): UseContextMenuReturn => {
       }
     };
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (showContextMenu && event.key === "Escape") {
+        event.preventDefault();
+        closeContextMenu();
+        stepRef.current?.blur();
+      }
+    };
+
     document.addEventListener("click", handleClickOutside);
     window.addEventListener("resize", handleResize);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [showContextMenu, closeContextMenu, updateContextMenuPosition, menuReady]);
 

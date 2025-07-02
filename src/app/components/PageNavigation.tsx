@@ -22,6 +22,8 @@ const PageNavigation: React.FC = () => {
   const [items, setItems] = useState<PageItem[]>(getInitialItems());
   const [activePage, setActivePage] = useState<string>(INITIAL_ACTIVE_PAGE);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const [addButtonHovered, setAddButtonHovered] = useState(false);
+  const isPageLimitReached = items.length >= MAX_PAGES;
 
   const handleAddPage = useCallback(
     (index: number) => {
@@ -85,7 +87,7 @@ const PageNavigation: React.FC = () => {
                 onMouseLeave={() => setHoverIndex(null)}
               >
                 <motion.div
-                  className="h-px bg-divider hover:cursor-pointer"
+                  className="h-px bg-[var(--color-gradient-separator)]"
                   style={GRADIENT_SEPARATOR_STYLE}
                   initial={{
                     opacity: 0,
@@ -95,7 +97,7 @@ const PageNavigation: React.FC = () => {
                   animate={{
                     opacity: 1,
                     scale: 1,
-                    ...(hoverIndex === index
+                    ...(hoverIndex === index && !isPageLimitReached
                       ? ANIMATION_CONFIG.gapVariants.expanded
                       : ANIMATION_CONFIG.gapVariants.normal),
                   }}
@@ -107,7 +109,7 @@ const PageNavigation: React.FC = () => {
                   transition={{ duration: 0.2 }}
                 />
                 <AnimatePresence>
-                  {hoverIndex === index && (
+                  {hoverIndex === index && !isPageLimitReached && (
                     <motion.button
                       variants={ANIMATION_CONFIG.addButtonVariants}
                       initial="hidden"
@@ -126,27 +128,39 @@ const PageNavigation: React.FC = () => {
         ))}
       </Reorder.Group>
       <motion.div
-        className="h-px bg-[#C0C0C0] hover:cursor-pointer"
+        className="h-px bg-[var(--color-gradient-separator)]"
         style={{
-          background: "linear-gradient(to right, #C0C0C0 50%, transparent 50%)",
+          background:
+            "linear-gradient(to right, var(--color-gradient-separator) 50%, transparent 50%)",
           backgroundSize: "6px 1px",
           backgroundRepeat: "repeat-x",
         }}
         variants={ANIMATION_CONFIG.gapVariants}
         initial="normal"
       />
-      <motion.button
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.2 }}
-        className="flex items-center gap-1.5 h-8 text-sm bg-[#F9FAFB] text-[#1A1A1A] border-[1px] border-[#E1E1E1] hover:cursor-pointer hover:bg-[#9da4b259] px-3 py-1 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-        onClick={() => handleAddPage(items.length - 1)}
-        aria-label="Add new page"
-        disabled={items.length >= MAX_PAGES}
+      <div
+        className="relative flex items-center"
+        onMouseEnter={() => setAddButtonHovered(true)}
+        onMouseLeave={() => setAddButtonHovered(false)}
       >
-        <PlusIcon size={16} />
-        Add page
-      </motion.button>
+        <motion.button
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.2 }}
+          className={`flex items-center gap-1.5 h-8 text-sm bg-[var(--color-button-bg)] text-[var(--color-active-text)] border-[1px] border-[var(--color-border)] px-3 py-1 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${isPageLimitReached ? "cursor-not-allowed opacity-60" : "hover:cursor-pointer hover:bg-[var(--color-hover-bg-opaque)]"}`}
+          onClick={() => handleAddPage(items.length - 1)}
+          aria-label="Add new page"
+          disabled={isPageLimitReached}
+        >
+          <PlusIcon size={16} />
+          Add page
+        </motion.button>
+        {isPageLimitReached && addButtonHovered && (
+          <div className="absolute left-1/2 top-full mt-2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded px-2 py-1 shadow-lg whitespace-nowrap z-10">
+            Maximum number of pages reached
+          </div>
+        )}
+      </div>
     </nav>
   );
 };
