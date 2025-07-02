@@ -13,13 +13,9 @@ const nextConfig: NextConfig = {
     config.resolve.alias["@/lib"] = path.resolve(__dirname, "src/app/lib");
     config.resolve.alias["@/types"] = path.resolve(__dirname, "src/app/types");
     config.resolve.alias["@/public"] = path.resolve(__dirname, "public");
-
     return config;
   },
   reactStrictMode: true,
-  output: "export",
-  basePath: "/page-navigation",
-  assetPrefix: "/page-navigation/",
   images: {
     unoptimized: true,
   },
